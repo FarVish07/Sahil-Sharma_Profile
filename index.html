@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the Inter font */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom CSS for the image carousel (if used in other sections) */
+        .carousel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-item {
+            min-width: 100%;
+            flex-shrink: 0;
+            display: none; /* Hide all images by default */
+        }
+        .carousel-item.active {
+            display: block; /* Show the active image */
+        }
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+        .carousel-control:hover {
+            opacity: 1;
+        }
+        .carousel-control.prev {
+            left: 10px;
+        }
+        .carousel-control.next {
+            right: 10px;
+        }
+        .carousel-indicators {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .carousel-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .carousel-indicator.active {
+            background-color: white;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #F97316; /* Orange-500 */
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+        .back-to-top:hover {
+            opacity: 1;
+        }
+
+        /* Form Styles (if used) */
+        .form-label {
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .form-control, .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            background-color: #fff;
+            transition: border-color 0.15s ease-in-out, shadow-sm 0.15s ease-in-out;
+        }
+        .form-control:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #20B2AA; /* A teal shade */
+            box-shadow: 0 0 0 0.2rem rgba(32, 178, 170, 0.25);
+        }
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .btn-primary {
+            color: #fff;
+            background-color: #20B2AA; /* A teal shade */
+            border-color: #20B2AA;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            cursor: pointer;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, shadow-sm 0.15s ease-in-out;
+        }
+        .btn-primary:hover {
+            background-color: #1A8C80; /* Darker teal */
+            border-color: #166E63; /* Even darker teal */
+        }
+        .btn-primary:focus {
+            box-shadow: 0 0 0 0.2rem rgba(32, 178, 170, 0.5);
+        }
+
+        /* Custom styles for skills section */
+        .skill-bar {
+            background-color: #e0f2f7; /* Lighter background for skill bar */
+            border-radius: 0.5rem;
+            height: 1rem;
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-bar-fill {
+            background-image: linear-gradient(to right, #2DD4BF, #0D9488); /* Teal gradient */
+            border-radius: 0.5rem;
+            height: 100%;
+            width: 0;
+            transition: width 0.8s ease-in-out; /* Smooth transition */
+            position: relative;
+        }
+
+        .skill-bar-fill::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.2); /* Subtle white overlay for shading */
+            border-radius: 0.5rem;
+        }
+
+        .skill-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .project-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .project-card:hover {
+            transform: translateY(-0.5rem);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .about-me-paragraph {
+            text-align: justify;
+        }
+    </style>
+</head>
+<body class="bg-emerald-50 font-inter">
+	<header class="bg-teal-600 text-white py-4 shadow-md">
+        <div class="container mx-auto flex py-10 px-4 justify-between items-center">
+            <h1 class="text-2xl font-bold">My Portfolio</h1>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="index.html" class="hover:text-teal-200 transition duration-300">Home</a></li>
+                    <li><a href="about.html" class="hover:text-teal-200 transition duration-300">About Me</a></li>
+                    <li><a href="projects.html" class="hover:text-teal-200 transition duration-300">Projects</a></li>
+                    <li><a href="contact.html" class="hover:text-teal-200 transition duration-300">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+<main class="container mx-auto py-10 px-4"> <!-- Added px-4 for horizontal padding -->
+    <section id="home" class="text-center">
+        <div class="flex flex-col md:flex-row items-center justify-center gap-20"> 
+            <img src="sahil.jpg" alt="Sahil Vishal Sharma" class="rounded-lg w-64 h-68 shadow-lg object-cover">
+            <div>
+                <h2 class="text-5xl font-semibold text-teal-800">Sahil Vishal Sharma</h2>
+                <p class="text-gray-700 mt-2"></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="mt-20">
+        <h2 class="text-3xl font-semibold text-teal-800 leading-relaxed mb-8">
+            Welcome to my portfolio website!
+        </h2>
+        <div>
+            <p class="text-gray-700 leading-relaxed mt-4 about-me-paragraph">
+                Hello there! Welcome to my little corner of the internet. I'm so glad you've stopped by to take a look at my portfolio.
+            </p>
+            <p class="text-gray-700 leading-relaxed mt-4 about-me-paragraph">
+                As a final year senior student at Rishikul Sanatan College, I'm currently buzzing with the excitement of learning and creating. This website is a collection of projects and work that I've poured my energy and enthusiasm into throughout my academic journey. It's a space where I can showcase the skills I've developed and the passions that drive me.
+            </p>
+            <p class="text-gray-700 leading-relaxed mt-4 about-me-paragraph">
+                Feel free to browse around and get a glimpse into what I've been up to. I hope you enjoy exploring my work!
+            </p>
+        </div>
+    </section>
+</main>
+
+    <a href="#" class="back-to-top">&#8679;</a>
+
+    <footer class="bg-teal-900 text-white py-4 mt-20">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 Sahil Vishal Sharma. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Back to Top Button Functionality
+        const backToTopButton = document.querySelector('.back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) {
+                backToTopButton.style.opacity = '0.7';
+            } else {
+                backToTopButton.style.opacity = '0';
+            }
+        });
+
+        backToTopButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Animate skill bars on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const skillBars = document.querySelectorAll('.skill-bar-fill');
+            skillBars.forEach(bar => {
+                const width = bar.dataset.width;
+                bar.style.width = width;
+            });
+        });
+    </script>
+</body>
+</html>

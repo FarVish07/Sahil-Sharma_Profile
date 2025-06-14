@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Projects</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom styles for the Inter font */
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #F97316; /* Orange-500 */
+      color: white;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+      z-index: 10;
+    }
+
+    .back-to-top:hover {
+      opacity: 1;
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      cursor: pointer;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 0.5rem;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      color: #bbb;
+    }
+  </style>
+</head>
+<body class="bg-emerald-50 font-inter">
+
+  <header class="bg-teal-600 text-white py-4 shadow-md">
+    <div class="container mx-auto flex justify-between items-center px-4">
+      <h1 class="text-2xl font-bold">My Portfolio</h1>
+      <nav>
+        <ul class="flex space-x-6">
+          <li><a href="index.html" class="hover:text-teal-200 transition duration-300">Home</a></li>
+          <li><a href="about.html" class="hover:text-teal-200 transition duration-300">About Me</a></li>
+          <li><a href="projects.html" class="hover:text-teal-200 transition duration-300">Projects</a></li>
+          <li><a href="contact.html" class="hover:text-teal-200 transition duration-300">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-12">
+    <section id="projects">
+      <h2 class="text-3xl font-semibold text-teal-800 text-center mb-12">My Projects</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-16">
+        <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition">
+          <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Payroll Calculator</h3>
+          <p class="text-gray-600 mb-3 text-center">Developed a fully functional Payroll Calculator for Year 12 Project.</p>
+          <p class="text-gray-700 font-medium text-center">Tools Used: Visual Basic</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition">
+          <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Sustainable Communities</h3>
+          <p class="text-gray-600 mb-3 text-center">Installed solar panels with our youth group to help cut energy costs.</p>
+          <p class="text-gray-700 font-medium text-center">Tools Used: Organizing, Installation Skills</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition">
+          <h3 class="text-xl font-semibold text-gray-800 mb-2 text-center">Portfolio Website</h3>
+          <p class="text-gray-600 mb-3 text-center">Created a personal website to display my skills and projects.</p>
+          <p class="text-gray-700 font-medium text-center">Tools Used: HTML, Tailwind CSS</p>
+        </div>
+      </div>
+
+      <h2 class="text-3xl font-semibold text-teal-800 text-center mb-8">Projects Gallery</h2>
+      <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+        Explore a collection of my recent projects. Hover over an image to see a subtle effect, and click to view a larger version.
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div class="gallery-item" data-src="paycalc3.png"> 
+            <img src="paycalc3.png" alt="Pay Calculator" class="rounded-lg w-64 h-68 shadow-lg object-cover">
+        </div>
+        <div class="gallery-item" data-src="paycalccode.png"> 
+            <img src="paycalccode.png" alt="Pay Calculator Code" class="rounded-lg w-64 h-68 shadow-lg object-cover">
+        </div>
+        <div class="gallery-item" data-src="suscom.jpg"> 
+            <img src="suscom.jpg" alt="Sustainable Communities" class="rounded-lg w-64 h-68 shadow-lg object-cover">
+        </div>
+        <div class="gallery-item" data-src="suscom2.jpg"> 
+            <img src="suscom2.jpg" alt="Sustainable Communities" class="rounded-lg w-64 h-68 shadow-lg object-cover">
+        </div>
+        <div class="gallery-item" data-src="suscom3.jpg"> 
+            <img src="suscom3.jpg" alt="Sustainable Communities" class="rounded-lg w-64 h-68 shadow-lg object-cover">
+        </div>
+        <div class="gallery-item" data-src="portweb2.png"> 
+            <img src="portweb2.png" alt="Portfolio Website" class="rounded-lg w-64 h-68 shadow-lg object-cover">
+        </div>
+        <div class="gallery-item" data-src="portweb3.png"> 
+            <img src="portweb3.png" alt="Portfolio Website" class="rounded-lg w-64 h-68 shadow-lg object-cover">
+        </div>
+        <div class="gallery-item" data-src="portweb4.png"> 
+            <img src="portweb4.png" alt="Portfolio Website" class="rounded-lg w-64 h-68 shadow-lg object-cover">
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="imageModal" class="modal">
+    <span class="modal-close">&times;</span>
+    <img class="modal-content" id="modalImage" />
+  </div>
+
+  <a href="#" class="back-to-top">&#8679;</a>
+
+  <footer class="bg-teal-900 text-white py-4 mt-20">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2025 Sahil Vishal Sharma. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Modal logic
+      const modal = document.getElementById("imageModal");
+      const modalImage = document.getElementById("modalImage");
+      const closeBtn = document.querySelector(".modal-close");
+
+      document.querySelectorAll(".gallery-item").forEach(item => {
+        item.addEventListener("click", () => {
+          modal.style.display = "flex";
+          // This line will now correctly get the image path from data-src
+          modalImage.src = item.dataset.src; 
+        });
+      });
+
+      closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+
+      // Back to top logic
+      const backToTopButton = document.querySelector('.back-to-top');
+      window.addEventListener('scroll', () => {
+        backToTopButton.style.opacity = window.scrollY > 200 ? '0.7' : '0';
+      });
+    });
+  </script>
+
+</body>
+</html>
